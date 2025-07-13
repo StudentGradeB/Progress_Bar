@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RBI Progress Tracker</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .progress-container {
+      text-align: center;
+    }
+
+    .circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #a4ea00 var(--percent),
+        #444444 var(--percent)
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .circle::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: #1e1e1e;
+      border-radius: 50%;
+    }
+
+    .circle span {
+      position: absolute;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .label {
+      font-size: 1em;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>RBI Exam Progress</h1>
+
+  <div class="container">
+    <!-- Phase 1 -->
+    <div class="progress-container">
+      <div class="circle" style="--percent: 60%;">
+        <span id="p1">60%</span>
+      </div>
+      <div class="label">Phase 1</div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="progress-container">
+      <div class="circle" style="--percent: 40%;">
+        <span id="p2">40%</span>
+      </div>
+      <div class="label">Phase 2</div>
+    </div>
+
+    <!-- Interview -->
+    <div class="progress-container">
+      <div class="circle" style="--percent: 10%;">
+        <span id="p3">10%</span>
+      </div>
+      <div class="label">Interview</div>
+    </div>
+  </div>
+
+  <script>
+    // 🎯 Just update these values (out of 100)
+    const phaseProgress = {
+      p1: 60,
+      p2: 40,
+      p3: 10
+    };
+
+    for (const [id, value] of Object.entries(phaseProgress)) {
+      const el = document.getElementById(id);
+      el.textContent = value + '%';
+      el.parentElement.style.setProperty('--percent', value + '%');
+    }
+  </script>
+</body>
+</html>
