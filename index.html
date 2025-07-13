@@ -16,7 +16,7 @@
       background-color: #1e1e1e;
       color: #ffffff;
       font-family: 'Segoe UI', sans-serif;
-      overflow: hidden; /* ✅ Removes scroll bar */
+      overflow: hidden; /* Removes scroll bar */
     }
 
     body {
@@ -86,42 +86,74 @@
   <div class="container">
     <!-- Phase 1 -->
     <div class="progress-container">
-      <div class="circle" style="--percent: 60%;">
-        <span id="p1">60%</span>
+      <div class="circle" style="--percent: 0%;">
+        <span id="p1">0%</span>
       </div>
       <div class="label">Phase 1</div>
     </div>
 
     <!-- Phase 2 -->
     <div class="progress-container">
-      <div class="circle" style="--percent: 40%;">
-        <span id="p2">40%</span>
+      <div class="circle" style="--percent: 0%;">
+        <span id="p2">0%</span>
       </div>
       <div class="label">Phase 2</div>
     </div>
 
     <!-- Interview -->
     <div class="progress-container">
-      <div class="circle" style="--percent: 10%;">
-        <span id="p3">10%</span>
+      <div class="circle" style="--percent: 0%;">
+        <span id="p3">0%</span>
       </div>
       <div class="label">Interview</div>
     </div>
   </div>
 
   <script>
-    // ✅ Update these values manually
-    const phaseProgress = {
-      p1: 10,
-      p2: 10,
-      p3: 10
+    // ── UPDATE THESE VALUES ──
+    // Phase 1 completed subtopics:
+    const phase1 = {
+      quant:     { total: 23, done:  0 },
+      reasoning: { total: 17, done:  0 },
+      eng:       { total: 27, done:  0 }
     };
+    // Phase 2 completed subtopics:
+    const phase2 = {
+      finance:    { total: 28, done:  0 },
+      esi:        { total: 25, done:  0 },
+      management: { total: 16, done:  0 },
+      desc_eng:   { total:  5, done:  0 }
+    };
+    // Interview progress out of 100:
+    const interview = { total: 100, done: 0 };
+    // ──────────────────────────
 
-    for (const [id, value] of Object.entries(phaseProgress)) {
-      const el = document.getElementById(id);
-      el.textContent = value + '%';
-      el.parentElement.style.setProperty('--percent', value + '%');
-    }
+    // Compute Phase 1 percent
+    let done1 = 0, tot1 = 0;
+    Object.values(phase1).forEach(t => { done1 += t.done; tot1 += t.total; });
+    const pct1 = tot1 ? Math.round((done1 / tot1) * 100) : 0;
+
+    // Compute Phase 2 percent
+    let done2 = 0, tot2 = 0;
+    Object.values(phase2).forEach(t => { done2 += t.done; tot2 += t.total; });
+    const pct2 = tot2 ? Math.round((done2 / tot2) * 100) : 0;
+
+    // Compute Interview percent
+    const pct3 = interview.total
+      ? Math.round((interview.done / interview.total) * 100)
+      : 0;
+
+    // Render into circles
+    const phases = [
+      { id: 'p1', pct: pct1 },
+      { id: 'p2', pct: pct2 },
+      { id: 'p3', pct: pct3 }
+    ];
+    phases.forEach(({id, pct}) => {
+      const span = document.getElementById(id);
+      span.textContent = pct + '%';
+      span.parentElement.style.setProperty('--percent', pct + '%');
+    });
   </script>
 </body>
 </html>
